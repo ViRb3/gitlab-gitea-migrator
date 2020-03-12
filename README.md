@@ -2,9 +2,18 @@
 > Batch repository migrator from GitLab to Gitea using their APIs
 
 ## Usage
-Create a `config.toml` using the provided [example](config.toml.example)
+1. Create a `config.toml` using the provided [example](config.toml.example)
+2. Run:
+    ```python
+    poetry install
+    ```
 
+### Migrate from GitLab to Gitea
 ```python
-poetry install
 poetry run python migrate.py
+```
+
+### Delete migrated repos from GitLab
+```python
+poetry run python clean.py
 ```

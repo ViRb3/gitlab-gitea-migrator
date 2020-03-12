@@ -20,8 +20,9 @@ def create_migration_body(project_url, project_description, project_path):
     }
 
 
-for project in gitlab_get(gitlab_user_projects_url).json():
-    url = project["http_url_to_repo"]
-    description = project["description"]
-    path = project["path"]
-    print(gitea_post(gitea_migrate_url, json=create_migration_body(url, description, path)).text)
+gitlab_projects = gitlab_get(gitlab_user_projects_url).json()
+gitea_projects = gitea_get(gitea_repos_url).json()
+
+pending_projects = [p for p in gitlab_projects if any(p2 for p2 in gitea_projects if p2["name"] == p["path"])]
+for project in pending_projects:
+    print(gitlab_delete(gitlab_projects_url + f'/{project["id"]}'))
