@@ -17,3 +17,8 @@ poetry run python migrate.py
 ```python
 poetry run python clean.py
 ```
+
+### Change all local repo remote URLs
+```bash
+grep -Irl "url = https://gitlab.com/john/" | xargs sed -i 's@url = https://gitlab.com/john/@url = https://git.example.com/john/@g'
+```
