@@ -1,0 +1,9 @@
+[gitlab]
+base_url="https://gitlab.com"
+api_token="1111"
+username="user"
+password="2222"
+
+[gitea]
+base_url="https://git.example.com"
+api_token="3333"
