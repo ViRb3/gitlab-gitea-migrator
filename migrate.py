@@ -13,11 +13,11 @@ gitea_migrate_url = config["gitea"]["base_url"] + "/api/v1/repos/migrate"
 gitlab_projects_url = config["gitlab"]["base_url"] + f"/api/v4/users/{gitlab_username}/projects"
 
 
-def gitlab_request(url):
+def gitlab_get(url):
     return requests.get(url, headers={"Private-Token": gitlab_api_token})
 
 
-def gitea_request(url, json):
+def gitea_post(url, json):
     return requests.post(url, headers={"Authorization": f"token {gitea_api_token}"}, json=json)
 
 
@@ -40,8 +40,8 @@ def create_migration_body(project_url, project_description, project_path):
     }
 
 
-for project in gitlab_request(gitlab_projects_url).json():
+for project in gitlab_get(gitlab_projects_url).json():
     url = project["http_url_to_repo"]
     description = project["description"]
     path = project["path"]
-    print(gitea_request(gitea_migrate_url, json=create_migration_body(url, description, path)).text)
+    print(gitea_post(gitea_migrate_url, json=create_migration_body(url, description, path)).text)
